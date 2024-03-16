@@ -2,6 +2,7 @@ import jetbrains.buildServer.configs.kotlin.*
 import jetbrains.buildServer.configs.kotlin.buildFeatures.dockerSupport
 import jetbrains.buildServer.configs.kotlin.buildFeatures.perfmon
 import jetbrains.buildServer.configs.kotlin.buildSteps.maven
+import jetbrains.buildServer.configs.kotlin.buildSteps.qodana
 import jetbrains.buildServer.configs.kotlin.projectFeatures.ProjectReportTab
 import jetbrains.buildServer.configs.kotlin.projectFeatures.projectReportTab
 import jetbrains.buildServer.configs.kotlin.triggers.vcs
@@ -66,6 +67,12 @@ object Build : BuildType({
             id = "Allure"
             type = "allureReportGeneratorRunner"
             param("target.jdk.home", "%env.JDK_17_0%")
+        }
+        qodana {
+            name = "Qoadana check"
+            id = "Qoadana_check"
+            linter = jvm {
+            }
         }
     }
 
