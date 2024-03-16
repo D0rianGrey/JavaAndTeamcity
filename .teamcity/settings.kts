@@ -62,17 +62,17 @@ object Build : BuildType({
             runnerArgs = "-Dmaven.test.failure.ignore=true"
             jdkHome = "%env.JDK_17_0_ARM64%"
         }
-        step {
-            name = "Allure"
-            id = "Allure"
-            type = "allureReportGeneratorRunner"
-            param("target.jdk.home", "%env.JDK_17_0%")
-        }
         qodana {
             name = "Qoadana check"
             id = "Qoadana_check"
             linter = jvm {
             }
+        }
+        step {
+            name = "Allure"
+            id = "Allure"
+            type = "allureReportGeneratorRunner"
+            param("target.jdk.home", "%env.JDK_17_0%")
         }
     }
 
