@@ -18,7 +18,7 @@ project {
         buildReportTab {
             id = "PROJECT_EXT_52"
             title = "Test Results"
-            startPage = "allure-report!index.html"
+            startPage = "allure-report/index.html"
         }
     }
 }
