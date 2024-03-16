@@ -17,10 +17,9 @@ project {
 
     features {
         projectReportTab {
-            id = "PROJECT_EXT_4"
+            id = "PROJECT_EXT_651"
             title = "Allure Report"
             startPage = "allure-report.zip!/allure-report/index.html"
-            buildType = "${Build.id}"
             sourceBuildRule = ProjectReportTab.SourceBuildRule.LAST_FINISHED
         }
     }
