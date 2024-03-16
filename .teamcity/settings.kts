@@ -48,21 +48,6 @@ object Build : BuildType({
         }
     }
 
-    artifactRules = """
-        +:allure-report => allure-report
-        +:allure-report/history => allure-report/history
-    """
-
-    dependencies {
-        artifacts(Build) {
-            id = "ARTIFACT_DEPENDENCY"
-            buildRule = lastSuccessful()
-            artifactRules = """
-                allure-report/history/* => allure-results/history
-            """
-        }
-    }
-
     triggers {
         vcs {
         }
