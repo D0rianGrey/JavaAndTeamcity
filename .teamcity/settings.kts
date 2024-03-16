@@ -40,11 +40,8 @@ project {
 
     features {
         projectReportTab {
-            id = "PROJECT_EXT_4"
             title = "Allure Report"
             startPage = "allure-report/index.html"
-            buildType = "${Build.id}"
-            sourceBuildRule = ProjectReportTab.SourceBuildRule.LAST_SUCCESSFUL
         }
     }
 }
@@ -77,12 +74,6 @@ object Build : BuildType({
             id = "Allure"
             type = "allureReportGeneratorRunner"
             param("target.jdk.home", "%env.JDK_17_0%")
-        }
-        step {
-            name = "Publish Allure Report"
-            id = "AllurePublish"
-            type = "allureReportPublisher"
-            param("allureReportPaths", "allure-report")
         }
     }
 
