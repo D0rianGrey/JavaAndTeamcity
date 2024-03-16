@@ -1,11 +1,14 @@
-import jetbrains.buildServer.configs.kotlin.*
+import jetbrains.buildServer.configs.kotlin.BuildType
+import jetbrains.buildServer.configs.kotlin.DslContext
 import jetbrains.buildServer.configs.kotlin.buildFeatures.dockerSupport
 import jetbrains.buildServer.configs.kotlin.buildFeatures.perfmon
 import jetbrains.buildServer.configs.kotlin.buildSteps.maven
 import jetbrains.buildServer.configs.kotlin.buildSteps.qodana
+import jetbrains.buildServer.configs.kotlin.project
 import jetbrains.buildServer.configs.kotlin.projectFeatures.ProjectReportTab
 import jetbrains.buildServer.configs.kotlin.projectFeatures.projectReportTab
 import jetbrains.buildServer.configs.kotlin.triggers.vcs
+import jetbrains.buildServer.configs.kotlin.version
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -74,6 +77,12 @@ object Build : BuildType({
             id = "Allure"
             type = "allureReportGeneratorRunner"
             param("target.jdk.home", "%env.JDK_17_0%")
+        }
+        step {
+            name = "Publish Allure Report"
+            id = "AllurePublish"
+            type = "allureReportPublisher"
+            param("allureReportPaths", "allure-report")
         }
     }
 
