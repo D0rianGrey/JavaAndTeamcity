@@ -44,6 +44,7 @@ object Build : BuildType({
             id = "Allure"
             type = "allureReportGeneratorRunner"
             param("target.jdk.home", "%env.JDK_17_0%")
+            param("allure.publish.mode", "PLAIN")
         }
     }
 
