@@ -1,20 +1,19 @@
-import jetbrains.buildServer.configs.kotlin.BuildType
-import jetbrains.buildServer.configs.kotlin.DslContext
+import Settings.Build.publishArtifacts
+import jetbrains.buildServer.configs.kotlin.*
 import jetbrains.buildServer.configs.kotlin.buildFeatures.dockerSupport
 import jetbrains.buildServer.configs.kotlin.buildFeatures.perfmon
 import jetbrains.buildServer.configs.kotlin.buildSteps.maven
-import jetbrains.buildServer.configs.kotlin.buildSteps.qodana
-import jetbrains.buildServer.configs.kotlin.project
 import jetbrains.buildServer.configs.kotlin.projectFeatures.ProjectReportTab
 import jetbrains.buildServer.configs.kotlin.projectFeatures.projectReportTab
 import jetbrains.buildServer.configs.kotlin.triggers.vcs
-import jetbrains.buildServer.configs.kotlin.version
 
 version = "2023.11"
 
 project {
 
     buildType(Build)
+
+    publishArtifacts = PublishMode.ALWAYS
 
     features {
         projectReportTab {
@@ -43,18 +42,24 @@ object Build : BuildType({
             runnerArgs = "-Dmaven.test.failure.ignore=true"
             jdkHome = "%env.JDK_17_0_ARM64%"
         }
-        qodana {
-            name = "Qoadana check"
-            id = "Qoadana_check"
-            enabled = false
-            linter = jvm {
-            }
+        maven {
+            name = "Generate Allure Report from allure-results"
+            goals = "allure:report"
         }
-        step {
-            name = "Allure"
-            id = "Allure"
-            type = "allureReportGeneratorRunner"
-            param("target.jdk.home", "%env.JDK_17_0%")
+    }
+
+    artifactRules = """
+        +:allure-report => allure-report
+        +:allure-report/history => allure-report/history
+    """
+
+    dependencies {
+        artifacts(Build) {
+            id = "ARTIFACT_DEPENDENCY"
+            buildRule = lastSuccessful()
+            artifactRules = """
+                allure-report/history/* => allure-results/history
+            """
         }
     }
 
