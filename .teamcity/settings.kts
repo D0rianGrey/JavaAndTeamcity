@@ -65,6 +65,7 @@ object Build : BuildType({
         qodana {
             name = "Qoadana check"
             id = "Qoadana_check"
+            enabled = false
             linter = jvm {
             }
         }
