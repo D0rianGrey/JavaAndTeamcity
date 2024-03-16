@@ -63,5 +63,8 @@ object Build : BuildType({
     features {
         perfmon {
         }
+        feature {
+            type = "allure.serverBuildFeature"
+        }
     }
 })
