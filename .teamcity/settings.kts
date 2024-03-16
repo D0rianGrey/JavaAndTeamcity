@@ -2,6 +2,8 @@ import jetbrains.buildServer.configs.kotlin.*
 import jetbrains.buildServer.configs.kotlin.buildFeatures.dockerSupport
 import jetbrains.buildServer.configs.kotlin.buildFeatures.perfmon
 import jetbrains.buildServer.configs.kotlin.buildSteps.maven
+import jetbrains.buildServer.configs.kotlin.projectFeatures.ProjectReportTab
+import jetbrains.buildServer.configs.kotlin.projectFeatures.projectReportTab
 import jetbrains.buildServer.configs.kotlin.triggers.vcs
 
 /*
@@ -31,6 +33,16 @@ version = "2023.11"
 project {
 
     buildType(Build)
+
+    features {
+        projectReportTab {
+            id = "PROJECT_EXT_4"
+            title = "Allure Report"
+            startPage = "index.html"
+            buildType = "${Build.id}"
+            sourceBuildRule = ProjectReportTab.SourceBuildRule.LAST_SUCCESSFUL
+        }
+    }
 }
 
 object Build : BuildType({
