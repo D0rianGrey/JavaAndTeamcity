@@ -1,4 +1,5 @@
 import io.qameta.allure.Attachment;
+import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -16,6 +17,7 @@ import java.net.URL;
 public class TestWithSelenium {
 
     @Test
+    @Issue("MYPROJECT-1")
     public void googleTitleTest() throws IOException {
         WebDriver driver = setupDriver();
         navigateToGoogle(driver);
