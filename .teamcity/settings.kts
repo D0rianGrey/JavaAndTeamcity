@@ -4,8 +4,7 @@ import jetbrains.buildServer.configs.kotlin.buildFeatures.dockerSupport
 import jetbrains.buildServer.configs.kotlin.buildFeatures.perfmon
 import jetbrains.buildServer.configs.kotlin.buildSteps.maven
 import jetbrains.buildServer.configs.kotlin.project
-import jetbrains.buildServer.configs.kotlin.projectFeatures.ProjectReportTab
-import jetbrains.buildServer.configs.kotlin.projectFeatures.projectReportTab
+import jetbrains.buildServer.configs.kotlin.projectFeatures.buildReportTab
 import jetbrains.buildServer.configs.kotlin.triggers.vcs
 import jetbrains.buildServer.configs.kotlin.version
 
@@ -16,11 +15,10 @@ project {
     buildType(Build)
 
     features {
-        projectReportTab {
-            id = "PROJECT_EXT_651"
-            title = "Allure Report"
-            startPage = "allure-report.zip!/allure-report/index.html"
-            sourceBuildRule = ProjectReportTab.SourceBuildRule.LAST_FINISHED
+        buildReportTab {
+            id = "PROJECT_EXT_52"
+            title = "Test Results"
+            startPage = "allure-report/index.html"
         }
     }
 }
@@ -63,5 +61,9 @@ object Build : BuildType({
         dockerSupport {
             enabled = false
         }
+
     }
+
+    artifactRules = "allure-report => allure-report"
+
 })
