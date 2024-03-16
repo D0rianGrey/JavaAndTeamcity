@@ -38,7 +38,7 @@ project {
         projectReportTab {
             id = "PROJECT_EXT_4"
             title = "Allure Report"
-            startPage = "index.html"
+            startPage = "allure-report/index.html"
             buildType = "${Build.id}"
             sourceBuildRule = ProjectReportTab.SourceBuildRule.LAST_SUCCESSFUL
         }
