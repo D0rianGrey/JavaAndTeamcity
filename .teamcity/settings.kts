@@ -1,12 +1,9 @@
-import jetbrains.buildServer.configs.kotlin.BuildType
-import jetbrains.buildServer.configs.kotlin.DslContext
+import jetbrains.buildServer.configs.kotlin.*
 import jetbrains.buildServer.configs.kotlin.buildFeatures.dockerSupport
 import jetbrains.buildServer.configs.kotlin.buildFeatures.perfmon
 import jetbrains.buildServer.configs.kotlin.buildSteps.maven
-import jetbrains.buildServer.configs.kotlin.project
 import jetbrains.buildServer.configs.kotlin.projectFeatures.buildReportTab
 import jetbrains.buildServer.configs.kotlin.triggers.vcs
-import jetbrains.buildServer.configs.kotlin.version
 
 version = "2023.11"
 
@@ -33,12 +30,26 @@ object Build : BuildType({
     }
 
     steps {
+
         maven {
             id = "Maven2"
             goals = "clean test"
             runnerArgs = "-Dmaven.test.failure.ignore=true"
             jdkHome = "%env.JDK_17_0_ARM64%"
         }
+
+        step {
+            name = "Copy categories.json"
+            id = "CopyCategories"
+            type = "simpleRunner"
+            param(
+                "script.content", """
+                cp -f %teamcity.build.checkoutDir%/categories.json allure-results/
+                """.trimIndent()
+            )
+            executionMode = BuildStep.ExecutionMode.ALWAYS
+        }
+
         step {
             name = "Allure"
             id = "Allure"

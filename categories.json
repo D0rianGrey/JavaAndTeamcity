@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Product Bugs",
+    "matchedStatuses": [
+      "broken",
+      "failed"
+    ],
+    "messageRegex": ".*bug.*"
+  }
+]
