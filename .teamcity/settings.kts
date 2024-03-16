@@ -69,6 +69,7 @@ object Build : BuildType({
             type = "allure.serverBuildFeature"
         }
         dockerSupport {
+            enabled = false
         }
     }
 })
