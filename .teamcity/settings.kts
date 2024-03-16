@@ -57,20 +57,15 @@ object Build : BuildType({
             param("target.jdk.home", "%env.JDK_17_0%")
             param("allure.publish.mode", "PLAIN")
         }
+    }
 
-        step {
-            name = "Preserve Allure History"
-            id = "PreserveHistory"
-            type = "simpleRunner"
-            param(
-                "script.content", """
-        # Assuming 'allure-report/history' is the folder to preserve
-        # and '%teamcity.build.checkoutDir%/allure-results/' is where to store it for next run
-        mkdir -p %teamcity.build.checkoutDir%/allure-results/history
-        cp -r allure-report/history %teamcity.build.checkoutDir%/allure-results/
-    """.trimIndent()
-            )
-            executionMode = BuildStep.ExecutionMode.ALWAYS
+    dependencies {
+        artifacts(Build) {
+            id = "ARTIFACT_DEPENDENCY"
+            buildRule = lastSuccessful()
+            artifactRules = """
+                allure-report/history/* => allure-results/history
+            """
         }
     }
 
