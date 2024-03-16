@@ -5,32 +5,28 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 
-public class TestWithSelenium {
+public class TestWithSelenium extends BaseTest {
 
     @Test
     @Issue("MYPROJECT-1")
     public void googleTitleTest() throws IOException {
-        WebDriver driver = setupDriver();
         navigateToGoogle(driver);
         takeScreenshot(driver);
-        verifyTitle(driver);
-        driver.quit();
+        verifyTitle(driver, "Google");
     }
 
-    @Step("Setup WebDriver")
-    private WebDriver setupDriver() throws IOException {
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setBrowserName("chrome");
-        return new RemoteWebDriver(new URL("http://192.168.8.110:4444"), capabilities);
+    @Test
+    public void googleTitleFailTest() throws IOException {
+        navigateToGoogle(driver);
+        takeScreenshot(driver);
+        verifyTitle(driver, "qwerty");
     }
 
     @Step("Navigate to Google")
@@ -52,7 +48,7 @@ public class TestWithSelenium {
     }
 
     @Step("Verify page title")
-    private void verifyTitle(WebDriver driver) {
-        Assert.assertEquals(driver.getTitle(), "Google", "Page title is not as expected");
+    private void verifyTitle(WebDriver driver, String expectedText) {
+        Assert.assertEquals(driver.getTitle(), expectedText, "Page title is not as expected");
     }
 }
