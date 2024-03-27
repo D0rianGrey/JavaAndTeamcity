@@ -27,6 +27,6 @@ public class BaseTest {
     protected WebDriver setupDriver() throws IOException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setBrowserName("chrome");
-        return new RemoteWebDriver(new URL("http://192.168.8.110:4444"), capabilities);
+        return new RemoteWebDriver(new URL("http://192.168.8.106:4444"), capabilities);
     }
 }
